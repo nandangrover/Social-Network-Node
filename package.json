@@ -1,0 +1,44 @@
+{
+  "name": "social-network-node",
+  "version": "1.0.0",
+  "description": "Social Network Using MERN Stack",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nandangrover/Social-Network-Node.git"
+  },
+  "keywords": [
+    "Social-Network",
+    "node",
+    "express",
+    "mongo",
+    "react",
+    "redux"
+  ],
+  "author": "Nandan Grover",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nandangrover/Social-Network-Node/issues"
+  },
+  "homepage": "https://github.com/nandangrover/Social-Network-Node#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "mongoose": "^5.4.2",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
