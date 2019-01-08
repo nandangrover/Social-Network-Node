@@ -29,7 +29,7 @@ class ItemModal extends Component {
     }
     this.props.addItem(newItem);
     this.toggle();
-    socket.emit('new_message', { message: newItem })
+    socket.emit('update', { message: newItem })
   }
 
   render() {

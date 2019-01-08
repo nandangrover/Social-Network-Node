@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getItems, deleteItem, onNewMsg } from '../actions/itemActions';
+import { getItems, deleteItem, onUpdate } from '../actions/itemActions';
 import { socket } from "../App";
 import PropTypes from 'prop-types';
 
@@ -10,14 +10,13 @@ class ShoppingList extends Component {
 
   componentDidMount() {
     this.props.getItems();
-    socket.on('new_message', (data) => {
-      console.log(data, "hello");
-
-      this.props.onNewMsg()
+    socket.on('update', (data) => {
+      this.props.onUpdate()
     })
   }
   onDeleteClick = (id) => {
     this.props.deleteItem(id);
+    socket.emit('update', { message: 'updated' })
   }
   render() {
     const { items } = this.props.item;
@@ -64,4 +63,4 @@ ShoppingList.propTypes = {
 const mapStateToProps = (state) => ({
   item: state.item
 })
-export default connect(mapStateToProps, { getItems, deleteItem, onNewMsg })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem, onUpdate })(ShoppingList);

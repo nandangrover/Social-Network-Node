@@ -31,16 +31,19 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   })
 }
+
 const port = process.env.PORT || 5000;
 
 //Socket IO
+// io.configure(() => {
+//   io.set("transports", ["xhr-polling"]);
+//   io.set("polling duration", 10);
+// });
 
 io.on('connection', (client) => {
   console.log("New client connected");
-  client.on('new_message', (data) => {
-    console.log(data);
-
-    io.sockets.emit('new_message', { message: data.message });
+  client.on('update', (data) => {
+    io.sockets.emit('update', { message: data.message });
   })
   client.on("disconnect", () => console.log("Client disconnected"));
 });

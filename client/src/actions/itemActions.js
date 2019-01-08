@@ -39,7 +39,7 @@ export const addItem = item => dispatch => {
       payload: res.data
     }))
 }
-export const onNewMsg = () => dispatch => {
+export const onUpdate = () => dispatch => {
   dispatch(setItemsLoading());
   axios
     .get('/api/items')

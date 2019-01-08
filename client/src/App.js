@@ -9,7 +9,7 @@ import openSocket from "socket.io-client";
 import { Provider } from 'react-redux';
 import store from './store';
 
-const socket = openSocket('http://localhost:5000');
+const socket = window.location.hostname === 'localhost' ? openSocket('http://localhost:5000') : openSocket(window.location.hostname);
 
 class App extends Component {
   render() {
