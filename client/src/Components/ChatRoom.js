@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Button, Badge } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getItems, deleteItem, onUpdate } from '../actions/itemActions';
-import { socket } from "../App";
+import { socket } from "./App";
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
-class ShoppingList extends Component {
+class ChatRoom extends Component {
 
   componentDidMount() {
     this.props.getItems();
@@ -35,18 +36,23 @@ class ShoppingList extends Component {
           }}
         >Add Item
         </Button> */}
-        <ListGroup>
+        <ListGroup style={{ wordBreak: 'break-all' }}>
           <TransitionGroup className="Shopping-list">
           </TransitionGroup>
-          {items.map(({ _id, name }) => (
+          {items.map(({ _id, name, date }) => (
             <CSSTransition key={_id} timeout={500} classNames="fade">
-              <ListGroupItem>
-                <Button className="remove-btn"
+              <ListGroupItem style={{ marginBottom: '1em' }} className="justify-content-between">
+                <Button close
                   color="danger"
                   size="sm"
                   onClick={this.onDeleteClick.bind(this, _id)}
+                  style={{ position: 'absolute', right: '7px' }}
                 >&times;</Button>
                 {name}
+                <Badge pill
+                  title={moment(date).toString()}
+                  style={{ marginLeft: '10px', backgroundColor: 'white', color: 'gray', position: 'relative', top: '4px' }}>{moment(date).fromNow()}
+                </Badge>
               </ListGroupItem>
             </CSSTransition>
           ))}
@@ -56,11 +62,11 @@ class ShoppingList extends Component {
   }
 }
 
-ShoppingList.propTypes = {
+ChatRoom.propTypes = {
   getItems: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired
 }
 const mapStateToProps = (state) => ({
   item: state.item
 })
-export default connect(mapStateToProps, { getItems, deleteItem, onUpdate })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem, onUpdate })(ChatRoom);

@@ -41,11 +41,11 @@ const port = process.env.PORT || 5000;
 // });
 
 io.on('connection', (client) => {
-  console.log("New client connected");
   client.on('update', (data) => {
+    console.log("request here");
+
     io.sockets.emit('update', { message: data.message });
   })
-  client.on("disconnect", () => console.log("Client disconnected"));
 });
 server.listen(port, () => console.log(`Server started on port ${port}`));
 

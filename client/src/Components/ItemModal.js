@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { addItem } from '../actions/itemActions';
-import { socket } from "../App"
+import { socket } from "./App"
 
 class ItemModal extends Component {
   state = {
@@ -29,6 +29,8 @@ class ItemModal extends Component {
     }
     this.props.addItem(newItem);
     this.toggle();
+    console.log("added");
+
     socket.emit('update', { message: newItem })
   }
 
