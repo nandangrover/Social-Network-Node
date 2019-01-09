@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button, Badge } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getItems, deleteItem, onUpdate } from '../actions/itemActions';
 import { socket } from "./App";
-import moment from 'moment';
+// import moment from 'moment';
+import MessageTime from './MessageTime';
 import PropTypes from 'prop-types';
 
 class ChatRoom extends Component {
@@ -49,10 +50,11 @@ class ChatRoom extends Component {
                   style={{ position: 'absolute', right: '7px' }}
                 >&times;</Button>
                 {name}
-                <Badge pill
+                {/* <Badge pill
                   title={moment(date).toString()}
                   style={{ marginLeft: '10px', backgroundColor: 'white', color: 'gray', position: 'relative', top: '4px' }}>{moment(date).fromNow()}
-                </Badge>
+                </Badge> */}
+                <MessageTime date={date}></MessageTime>
               </ListGroupItem>
             </CSSTransition>
           ))}
