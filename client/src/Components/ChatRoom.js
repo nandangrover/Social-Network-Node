@@ -18,7 +18,7 @@ class ChatRoom extends Component {
   }
   onDeleteClick = (id) => {
     this.props.deleteItem(id);
-    socket.emit('update', { message: 'updated' })
+    socket.emit('update', { message: 'updated' });
   }
   render() {
     const { items } = this.props.item;

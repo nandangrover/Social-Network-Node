@@ -15,7 +15,7 @@ export const getItems = () => dispatch => {
 
 export const deleteItem = id => dispatch => {
   dispatch(setItemsLoading());
-  axios.delete(`/api/items${id}`).then(res =>
+  axios.delete(`/api/items/${id}`).then(res =>
     dispatch({
       type: DELETE_ITEM,
       payload: id
