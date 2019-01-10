@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
-const User = require('../../models/User');
+const User = require("../../models/User");
 
 const validateRegisterInput = require("../../utils/validation/register");
 const validateLoginInput = require("../../utils/validation/login");

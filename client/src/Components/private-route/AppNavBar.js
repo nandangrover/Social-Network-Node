@@ -9,6 +9,9 @@ import {
   NavLink,
   Container
 } from 'reactstrap';
+import { Link } from "react-router-dom";
+import { logoutUser } from '../../actions/authAction';
+import { connect } from "react-redux";
 
 // eslint-disable-next-line react/require-render-return
 class AppNavBar extends Component {
@@ -21,6 +24,12 @@ class AppNavBar extends Component {
       isOpen: !this.state.isOpen
     });
   }
+  onLogoutClick = e => {
+    e.preventDefault();
+    console.log("hereeee AppNavBar");
+
+    this.props.logoutUser();
+  }
 
   render() {
     return (
@@ -32,16 +41,20 @@ class AppNavBar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="https://github.com/nandangrover">Github</NavLink>
+                  <Link to="/" onClick={this.onLogoutClick}>Logout</Link>
                 </NavItem>
               </Nav>
             </Collapse>
           </Container>
         </Navbar>
-      </div>
+      </div >
     );
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 
-export default AppNavBar;
+export default connect(mapStateToProps, { logoutUser })(AppNavBar);
+// export default AppNavBar;

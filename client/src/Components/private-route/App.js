@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css';
-import AppNavBar from './AppNavBar';
+import '../../App.css';
 import ChatRoom from './ChatRoom';
 import ItemModal from './ItemModal';
 import { Container } from 'reactstrap';
@@ -14,10 +13,9 @@ class App extends Component {
     return (
       // <Provider store={store}>
       <div className="App">
-        <AppNavBar />
         <Container>
-          <ItemModal />
           <ChatRoom />
+          <ItemModal />
         </Container>
       </div>
       // </Provider>

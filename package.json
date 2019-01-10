@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/nandangrover/Social-Network-Node#readme",
   "dependencies": {
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
