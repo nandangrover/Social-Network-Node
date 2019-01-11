@@ -47,14 +47,13 @@ class ItemModal extends Component {
 
   render() {
     return (
-      <div>
-        <div
+      <div
           className="chatFooter"
           style={{
-            display: "inline-flex",
+            display: "flex",
             outline: "none",
-            top: "636px",
-            position: "fixed"
+            marginTop: "7px",
+            position: "relative"
           }}
         >
           <input
@@ -67,7 +66,7 @@ class ItemModal extends Component {
             style={{
               marginTop: "0px",
               marginBottom: "0px",
-              width: "797px",
+              // width: "797px",
               marginLeft: "18px",
               left: "10px",
               resize: "none",
@@ -95,7 +94,6 @@ class ItemModal extends Component {
           >
             Send
           </button>
-        </div>
       </div>
     );
   }
