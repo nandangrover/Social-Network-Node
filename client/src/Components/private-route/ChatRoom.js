@@ -1,22 +1,24 @@
 import React, { Component } from "react";
-import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
+import { Container, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import { getItems, deleteItem, onUpdate } from "../../actions/itemActions";
 import { socket } from "./App";
+// import ScrollArea from "react-scrollbar";
 // import moment from 'moment';
 import MessageTime from "./MessageTime";
 import PropTypes from "prop-types";
 
 class ChatRoom extends Component {
-  state = {
-    left: "650px"
-  };
   componentDidMount() {
     this.props.getItems();
     socket.on("update", data => {
       this.props.onUpdate();
     });
+  }
+  componentDidUpdate() {
+    const scrollElem = document.getElementsByClassName("ContainerScrollBar");
+    scrollElem[0].scrollTop = scrollElem[0].scrollHeight;
   }
   onDeleteClick = id => {
     this.props.deleteItem(id);
@@ -24,7 +26,7 @@ class ChatRoom extends Component {
   };
   render() {
     const { items } = this.props.item;
-    console.log(items);
+    // this.ScrollArea.refresh();
 
     return (
       <Container>
@@ -42,14 +44,20 @@ class ChatRoom extends Component {
         >Add Item
         </Button> */}
         {/* <ListGroup style={{ wordBreak: "break-all" }}> */}
-        {/* <TransitionGroup className="Shopping-list" /> */}
-        <div className="Container">
+        <TransitionGroup className="Shopping-list" />
+        <div className="ContainerScrollBar">
+          {/* <ScrollArea
+            speed={0.8}
+            className="area"
+            contentClassName="content"
+            horizontal={false}
+          > */}
           {items.map(({ _id, name, date, userName }) => (
             <CSSTransition key={_id} timeout={500} classNames="fade">
               {/* <ListGroupItem */}
               <div
                 className="textWrapper"
-                style={{ left: "650px", position: "relative" }}
+                style={{ right: "0px", position: "relative" }}
               >
                 <div
                   className="userDetails"
@@ -69,15 +77,14 @@ class ChatRoom extends Component {
                   >
                     {userName}
                   </div>
-                  <MessageTime date={date} />
                 </div>
                 <div
                   style={{
                     marginBottom: "1em",
-                    backgroundColor: "#a4ffa8d9",
-                    maxWidth: "160px",
-                    borderRadius: "70px",
-                    padding: "10px",
+                    backgroundColor: "rgba(164, 255, 168, 0.85)",
+                    maxWidth: "244px",
+                    borderRadius: "13px",
+                    padding: "12px",
                     height: "auto",
                     wordBreak: "break-word",
                     position: "relative"
@@ -91,10 +98,11 @@ class ChatRoom extends Component {
                     color="danger"
                     size="sm"
                     onClick={this.onDeleteClick.bind(this, _id)}
-                    style={{ position: "absolute", right: "7px" }}
+                    style={{ position: "absolute", right: "7px", top: "7px" }}
                   >
                     &times;
                   </Button>
+                  <MessageTime date={date} />
                   {/* <Badge pill
                   title={moment(date).toString()}
                   style={{ marginLeft: '10px', backgroundColor: 'white', color: 'gray', position: 'relative', top: '4px' }}>{moment(date).fromNow()}
@@ -105,6 +113,7 @@ class ChatRoom extends Component {
               </div>
             </CSSTransition>
           ))}
+          {/* </ScrollArea> */}
         </div>
         {/* </ListGroup> */}
       </Container>
@@ -115,6 +124,9 @@ class ChatRoom extends Component {
 ChatRoom.propTypes = {
   getItems: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired
+};
+ChatRoom.contextTypes = {
+  scrollArea: PropTypes.object
 };
 const mapStateToProps = state => ({
   item: state.item,

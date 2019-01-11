@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React from "react";
+import PropTypes from "prop-types";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import store from "./store";
 // import openSocket from "socket.io-client";
-import App from './Components/private-route/App';
-import Landing from './Components/Landing';
-import Register from './Components/Register';
-import Login from './Components/Login';
-import AppNavBar from './Components/private-route/AppNavBar';
+import App from "./Components/private-route/App";
+import Landing from "./Components/public-route/Landing";
+import Register from "./Components/public-route/Register";
+import Login from "./Components/public-route/Login";
+// import AppNavBar from './Components/private-route/AppNavBar';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authAction";
@@ -38,7 +38,7 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
       <div>
-        <AppNavBar />
+        {/* <AppNavBar /> */}
         <Route exact path="/" component={Landing} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
@@ -49,11 +49,11 @@ const Root = ({ store }) => (
       </div>
     </Router>
   </Provider>
-)
+);
 
 Root.propTypes = {
   store: PropTypes.object.isRequired
-}
+};
 
 // export { socket };
-export default Root
+export default Root;

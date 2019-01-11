@@ -6,14 +6,15 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
+  NavLink,
   Container
 } from "reactstrap";
-import { Link } from "react-router-dom";
-import { logoutUser } from "../../actions/authAction";
-import { connect } from "react-redux";
+// import { Link } from "react-router-dom";
+// import { logoutUser } from "../../actions/authAction";
+// import { connect } from "react-redux";
 
 // eslint-disable-next-line react/require-render-return
-class AppNavBar extends Component {
+class NavBar extends Component {
   state = {
     isOpen: false
   };
@@ -22,12 +23,6 @@ class AppNavBar extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  };
-  onLogoutClick = e => {
-    e.preventDefault();
-    console.log("hereeee AppNavBar");
-
-    this.props.logoutUser();
   };
 
   render() {
@@ -40,9 +35,9 @@ class AppNavBar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to="/" onClick={this.onLogoutClick}>
-                    Logout
-                  </Link>
+                  <NavLink href="https://github.com/nandangrover/">
+                    Github
+                  </NavLink>
                 </NavItem>
               </Nav>
             </Collapse>
@@ -53,12 +48,5 @@ class AppNavBar extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(
-  mapStateToProps,
-  { logoutUser }
-)(AppNavBar);
+export default NavBar;
 // export default AppNavBar;

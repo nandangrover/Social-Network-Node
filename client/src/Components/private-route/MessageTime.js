@@ -22,11 +22,12 @@ class MessageTime extends Component {
         pill
         title={moment(this.props.date).toString()}
         style={{
-          backgroundColor: "white",
+          background: "none",
           color: "gray",
-          position: "relative",
+          position: "absolute",
           fontSize: "10px",
-          top: "4px",
+          top: "-23px",
+          right: "-7px",
           display: "table-cell"
         }}
       >

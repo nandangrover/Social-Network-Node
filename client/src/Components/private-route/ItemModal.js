@@ -24,6 +24,11 @@ class ItemModal extends Component {
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  onEnter = e => {
+    if (e.key === "Enter") {
+      this.onSubmit(e);
+    }
+  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -45,12 +50,18 @@ class ItemModal extends Component {
       <div>
         <div
           className="chatFooter"
-          style={{ display: "inline-flex", outline: "none" }}
+          style={{
+            display: "inline-flex",
+            outline: "none",
+            top: "636px",
+            position: "fixed"
+          }}
         >
-          <textarea
+          <input
             className="inputArea"
             placeholder={this.state.placeholder}
             onChange={this.onChange}
+            onKeyPress={this.onEnter}
             name="name"
             value={this.state.name}
             style={{
