@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
@@ -19,11 +17,11 @@ class NavBar extends Component {
     isOpen: false
   };
 
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
+  // toggle = () => {
+  //   this.setState({
+  //     isOpen: !this.state.isOpen
+  //   });
+  // };
 
   render() {
     return (
@@ -31,16 +29,16 @@ class NavBar extends Component {
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
             <NavbarBrand href="/">Chat App</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink href="https://github.com/nandangrover/">
-                    Github
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </Collapse>
+            {/* <NavbarToggler onClick={this.toggle} /> */}
+            {/* <Collapse isOpen={this.state.isOpen} navbar> */}
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink href="https://github.com/nandangrover/">
+                  Github
+                </NavLink>
+              </NavItem>
+            </Nav>
+            {/* </Collapse> */}
           </Container>
         </Navbar>
       </div>
