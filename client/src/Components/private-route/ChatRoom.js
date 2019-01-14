@@ -13,8 +13,11 @@ class ChatRoom extends Component {
   componentDidMount() {
     this.props.getItems();
     socket.on("update", data => {
-      this.props.onUpdate();
+      // this.setState({ items: this.state.push(this.props.item.items) });
+      this.props.onUpdate(data);
+      console.log(data);
     });
+    // this.setState({ items: this.state.push(this.props.item.items) });
   }
   componentDidUpdate() {
     const scrollElem = document.getElementsByClassName("ContainerScrollBar");
@@ -52,8 +55,8 @@ class ChatRoom extends Component {
             contentClassName="content"
             horizontal={false}
           > */}
-          {items.map(({ _id, name, date, userName }) => (
-            <CSSTransition key={_id} timeout={500} classNames="fade">
+          {items.map(({ id, name, date, userName }) => (
+            <CSSTransition key={id} timeout={500} classNames="fade">
               {/* <ListGroupItem */}
               <div
                 className="textWrapper"
@@ -90,14 +93,14 @@ class ChatRoom extends Component {
                     position: "relative"
                   }}
                   className="chats"
-                  id={_id}
+                  id={id}
                 >
                   {name}
                   <Button
                     close
                     color="danger"
                     size="sm"
-                    onClick={this.onDeleteClick.bind(this, _id)}
+                    onClick={this.onDeleteClick.bind(this, id)}
                     style={{ position: "absolute", right: "7px", top: "7px" }}
                   >
                     &times;

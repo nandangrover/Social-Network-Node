@@ -19,7 +19,13 @@ router.post("/", (req, res) => {
     userName: req.body.userName,
     userId: req.body.userId
   });
-  newItem.save().then(item => res.json(item));
+  newItem.save().then(item => {
+    exports = module.exports = io => {
+      io.sockets.on("connection", client => {
+        io.sockets.emit("update", { message: res.json(item) });
+      });
+    };
+  });
 });
 
 router.delete("/:id", (req, res) => {

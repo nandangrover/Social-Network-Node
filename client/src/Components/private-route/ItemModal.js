@@ -5,6 +5,7 @@ import React, { Component } from "react";
 // mport SaveIcon from '@material-ui/icons/Save';
 import { connect } from "react-redux";
 import { addItem } from "../../actions/itemActions";
+import uuid from "uuid";
 import { socket } from "./App";
 // import TextField from "@material-ui/core/TextField";
 
@@ -36,13 +37,14 @@ class ItemModal extends Component {
     const newItem = {
       name: this.state.name,
       userName: this.props.auth.user.name,
-      userId: this.props.auth.user.id
+      userId: this.props.auth.user.id,
+      id: uuid()
     };
     this.props.addItem(newItem);
     this.toggle();
     this.setState({ name: "" });
-
     socket.emit("update", { message: newItem });
+    // console.log(uuid());
   };
 
   render() {
