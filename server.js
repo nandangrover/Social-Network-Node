@@ -6,8 +6,8 @@ const users = require("./routes/api/users");
 const app = express();
 const server = require("http").createServer(app);
 const passport = require("passport");
-const io = require("socket.io")(server);
-const items = require("./routes/api/items")(io);
+global.io = require("socket.io")(server);
+const items = require("./routes/api/items");
 // const socketItems = require("./routes/api/items")(io)
 
 app.use(bodyParser.json());
@@ -55,9 +55,12 @@ server.listen(port, () => console.log(`Server started on port ${port}`));
 //   io.set("polling duration", 10);
 // });
 
-io.on("connection", client => {
+global.io.on("connection", client => {
   client.on("update", data => {
-    io.sockets.emit("update", { message: data.message });
+    global.io.sockets.emit("update", { message: data.message });
+  });
+  client.on("delete", data => {
+    global.io.sockets.emit("delete", { message: data.message });
   });
   client.on("disconnect", function() {
     console.log("disconnect __________________");

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { socket } from "../Components/private-route/App";
 import {
   GET_ITEMS,
   ADD_ITEM,
@@ -18,13 +19,15 @@ export const getItems = () => dispatch => {
 };
 
 export const deleteItem = id => dispatch => {
+  console.log(id);
+
   dispatch(setItemsLoading());
-  axios.delete(`/api/items/${id}`).then(res =>
+  axios.delete(`/api/items/${id}`).then(res => {
     dispatch({
       type: DELETE_ITEM,
       payload: id
-    })
-  );
+    });
+  });
   // axios
   //   .get('/api/items')
   //   .then(res =>
@@ -37,12 +40,13 @@ export const deleteItem = id => dispatch => {
 
 export const addItem = item => dispatch => {
   dispatch(setItemsLoading());
-  axios.post("/api/items", item).then(res =>
+  axios.post("/api/items", item).then(res => {
     dispatch({
       type: ADD_ITEM,
       payload: res.data
-    })
-  );
+    });
+    socket.emit("update", { message: res.data });
+  });
 };
 export const onUpdate = item => dispatch => {
   dispatch(setItemsLoading());

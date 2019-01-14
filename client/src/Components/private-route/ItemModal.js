@@ -5,8 +5,8 @@ import React, { Component } from "react";
 // mport SaveIcon from '@material-ui/icons/Save';
 import { connect } from "react-redux";
 import { addItem } from "../../actions/itemActions";
-import uuid from "uuid";
-import { socket } from "./App";
+// import uuid from "uuid";
+// import { socket } from "./App";
 // import TextField from "@material-ui/core/TextField";
 
 class ItemModal extends Component {
@@ -37,65 +37,64 @@ class ItemModal extends Component {
     const newItem = {
       name: this.state.name,
       userName: this.props.auth.user.name,
-      userId: this.props.auth.user.id,
-      id: uuid()
+      userId: this.props.auth.user.id
     };
     this.props.addItem(newItem);
     this.toggle();
     this.setState({ name: "" });
-    socket.emit("update", { message: newItem });
+    // socket.emit("update", { message: newItem });
     // console.log(uuid());
   };
 
   render() {
     return (
       <div
-          className="chatFooter"
+        className="chatFooter"
+        style={{
+          display: "flex",
+          outline: "none",
+          marginTop: "7px",
+          position: "relative"
+        }}
+      >
+        <input
+          className="inputArea"
+          placeholder={this.state.placeholder}
+          onChange={this.onChange}
+          onKeyPress={this.onEnter}
+          name="name"
+          value={this.state.name}
           style={{
-            display: "flex",
+            marginTop: "0px",
+            marginBottom: "0px",
+            // width: "797px",
+            marginLeft: "18px",
+            left: "10px",
+            resize: "none",
+            backgroundColor: "#fffdfd",
+            height: "34px",
             outline: "none",
-            marginTop: "7px",
-            position: "relative"
+            borderRadius: "5px",
+            marginRight: "11px"
+          }}
+        />
+        <button
+          className="sendButton"
+          onClick={this.onSubmit}
+          style={{
+            width: "100px",
+            display: "table-cell",
+            border: "none",
+            color: "white",
+            backgroundColor: "#2996f7",
+            borderRadius: "5px",
+            fontSize: "16px",
+            fontFamily: "verdana",
+            cursor: "pointer"
           }}
         >
-          <input
-            className="inputArea"
-            placeholder={this.state.placeholder}
-            onChange={this.onChange}
-            onKeyPress={this.onEnter}
-            name="name"
-            value={this.state.name}
-            style={{
-              marginTop: "0px",
-              marginBottom: "0px",
-              // width: "797px",
-              marginLeft: "18px",
-              left: "10px",
-              resize: "none",
-              backgroundColor: "#fffdfd",
-              height: "34px",
-              outline: "none",
-              borderRadius: "5px",
-              marginRight: "11px"
-            }}
-          />
-          <button
-            className="sendButton"
-            onClick={this.onSubmit}
-            style={{
-              width: "100px",
-              display: "table-cell",
-              border: "none",
-              color: "white",
-              backgroundColor: "#2996f7",
-              borderRadius: "5px",
-              fontSize: "16px",
-              fontFamily: "verdana",
-              cursor: "pointer"
-            }}
-          >
-            Send
-          </button>
+          Send
+        </button>
       </div>
     );
   }

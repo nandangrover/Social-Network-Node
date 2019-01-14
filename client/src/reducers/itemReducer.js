@@ -22,17 +22,17 @@ export default function(state = initialState, action) {
     case DELETE_ITEM:
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload)
+        items: state.items.filter(item => item._id !== action.payload)
       };
     case ADD_ITEM:
       return {
-        ...state,
-        items: [action.payload, ...state.items]
+        ...state
+        // items: [...state.items, action.payload]
       };
     case UPDATE_ITEMS:
       return {
         ...state,
-        items: [action.payload, ...state.items]
+        items: [...state.items, action.payload]
       };
     case ITEMS_LOADING:
       return {

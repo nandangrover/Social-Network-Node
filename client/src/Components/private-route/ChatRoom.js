@@ -13,23 +13,26 @@ class ChatRoom extends Component {
   componentDidMount() {
     this.props.getItems();
     socket.on("update", data => {
-      // this.setState({ items: this.state.push(this.props.item.items) });
       this.props.onUpdate(data);
-      console.log(data);
     });
-    // this.setState({ items: this.state.push(this.props.item.items) });
   }
   componentDidUpdate() {
     const scrollElem = document.getElementsByClassName("ContainerScrollBar");
     scrollElem[0].scrollTop = scrollElem[0].scrollHeight;
   }
   onDeleteClick = id => {
-    this.props.deleteItem(id);
-    socket.emit("update", { message: "updated" });
+    // this.props.deleteItem(id);
+    socket.emit("delete", { message: id });
+    socket.on("delete", id => {
+      this.props.deleteItem(id.message);
+    });
   };
   render() {
     const { items } = this.props.item;
+    // console.log(items);
+
     // this.ScrollArea.refresh();
+    // console.log(items);
 
     return (
       <Container>
@@ -55,8 +58,8 @@ class ChatRoom extends Component {
             contentClassName="content"
             horizontal={false}
           > */}
-          {items.map(({ id, name, date, userName }) => (
-            <CSSTransition key={id} timeout={500} classNames="fade">
+          {items.map(({ _id, name, date, userName }) => (
+            <CSSTransition key={_id} timeout={500} classNames="fade">
               {/* <ListGroupItem */}
               <div
                 className="textWrapper"
@@ -93,14 +96,14 @@ class ChatRoom extends Component {
                     position: "relative"
                   }}
                   className="chats"
-                  id={id}
+                  id={_id}
                 >
                   {name}
                   <Button
                     close
                     color="danger"
                     size="sm"
-                    onClick={this.onDeleteClick.bind(this, id)}
+                    onClick={this.onDeleteClick.bind(this, _id)}
                     style={{ position: "absolute", right: "7px", top: "7px" }}
                   >
                     &times;

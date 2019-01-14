@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Item = require("../../models/Item");
+// const io = require("../../server");
 
 // const app = express();
 
@@ -20,12 +21,21 @@ router.post("/", (req, res) => {
     userId: req.body.userId
   });
   newItem.save().then(item => {
-    exports = module.exports = io => {
-      io.sockets.on("connection", client => {
-        io.sockets.emit("update", { message: res.json(item) });
-      });
-    };
+    // global.io.sockets.on("connection", client => {
+    // res.json(item);
+    res.json(item);
+    // });
   });
+  // .then(() => {
+  // global.io.sockets.on("connection", client => {
+  // });
+  // newItem.save().then(item => {
+  //   exports = module.exports = io => {
+  //     io.sockets.on("connection", client => {
+  //       io.sockets.emit("update", { message: res.json(item) });
+  //     });
+  //   };
+  // })
 });
 
 router.delete("/:id", (req, res) => {

@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  Container
-} from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, Container } from "reactstrap";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authAction";
 import { connect } from "react-redux";
@@ -38,13 +30,13 @@ class AppNavBar extends Component {
             <NavbarBrand href="/">Chat App</NavbarBrand>
             {/* <NavbarToggler onClick={this.toggle} /> */}
             {/* <Collapse isOpen={this.state.isOpen} navbar> */}
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <Link to="/" onClick={this.onLogoutClick}>
-                    Logout
-                  </Link>
-                </NavItem>
-              </Nav>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <Link to="/" onClick={this.onLogoutClick}>
+                  Logout
+                </Link>
+              </NavItem>
+            </Nav>
             {/* </Collapse> */}
           </Container>
         </Navbar>
