@@ -6,6 +6,7 @@ import ItemModal from "./ItemModal";
 import { Container } from "reactstrap";
 import AppNavBar from "./AppNavBar";
 import openSocket from "socket.io-client";
+// import SideNavBar from "./SearchBar";
 // import { Provider } from 'react-redux';
 // import store from '../store';
 const socket =

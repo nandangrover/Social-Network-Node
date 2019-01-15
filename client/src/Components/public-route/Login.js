@@ -58,13 +58,14 @@ class Login extends Component {
                   onChange={this.onChange}
                   value={this.state.email}
                   error={errors.email}
+                  placeholder="Email"
                   id="email"
                   type="email"
                   className={classnames("", {
                     invalid: errors.email || errors.emailnotfound
                   })}
                 />
-                <label htmlFor="email">Email</label>
+                {/* <label htmlFor="email">Email</label> */}
                 <span className="red-text">
                   {errors.email}
                   {errors.emailnotfound}
@@ -75,13 +76,14 @@ class Login extends Component {
                   onChange={this.onChange}
                   value={this.state.password}
                   error={errors.password}
+                  placeholder="Password"
                   id="password"
                   type="password"
                   className={classnames("", {
                     invalid: errors.password || errors.passwordincorrect
                   })}
                 />
-                <label htmlFor="password">Password</label>
+                {/* <label htmlFor="password">Password</label> */}
                 <span className="red-text">
                   {errors.password}
                   {errors.passwordincorrect}

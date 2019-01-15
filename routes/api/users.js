@@ -20,7 +20,13 @@ router.post("/register", (req, res) => {
       return res.status(400).json({ email: "Email already exists" });
     }
   });
+  User.findOne({ name: req.body.username }).then(user => {
+    if (user) {
+      return res.status(400).json({ email: "Username already exists" });
+    }
+  });
   const newUser = new User({
+    username: req.body.username,
     name: req.body.name,
     email: req.body.email,
     password: req.body.password
@@ -36,6 +42,16 @@ router.post("/register", (req, res) => {
         .catch(err => console.log(err));
     });
   });
+});
+
+router.get("/getUsers/:id", (req, res) => {
+  const v = req.params.id;
+  const regex = new RegExp(`^${v}`, "i", "g");
+  User.find({ username: { $regex: regex } })
+    // .sort({
+    //   date: -1
+    // })
+    .then(users => res.json(users));
 });
 
 router.post("/login", (req, res) => {
@@ -62,6 +78,7 @@ router.post("/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
+          username: user.username,
           name: user.name
         };
         // Sign token

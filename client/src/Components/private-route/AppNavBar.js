@@ -3,6 +3,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, Container } from "reactstrap";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authAction";
 import { connect } from "react-redux";
+import SearchBar from "./SearchBar";
 
 // eslint-disable-next-line react/require-render-return
 class AppNavBar extends Component {
@@ -27,7 +28,8 @@ class AppNavBar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href="/">Chat App</NavbarBrand>
+            {/* <NavbarBrand href="/">Chat App</NavbarBrand> */}
+            <SearchBar />
             {/* <NavbarToggler onClick={this.toggle} /> */}
             {/* <Collapse isOpen={this.state.isOpen} navbar> */}
             <Nav className="ml-auto" navbar>

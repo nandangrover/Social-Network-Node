@@ -6,7 +6,7 @@ const users = require("./routes/api/users");
 const app = express();
 const server = require("http").createServer(app);
 const passport = require("passport");
-global.io = require("socket.io")(server);
+const io = require("socket.io")(server);
 const items = require("./routes/api/items");
 // const socketItems = require("./routes/api/items")(io)
 
@@ -44,23 +44,23 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// const io = require("socket.io").listen(server);
 const port = process.env.PORT || 5000;
+// const port = 5000;
 server.listen(port, () => console.log(`Server started on port ${port}`));
 
-// const io = require("socket.io").listen(server);
-
 //Socket IO
-// io.configure(() => {
+// io.configure(() => {as
 //   io.set("transports", ["xhr-polling"]);
 //   io.set("polling duration", 10);
 // });
 
-global.io.on("connection", client => {
+io.on("connection", client => {
   client.on("update", data => {
-    global.io.sockets.emit("update", { message: data.message });
+    io.sockets.emit("update", { message: data.message });
   });
   client.on("delete", data => {
-    global.io.sockets.emit("delete", { message: data.message });
+    io.sockets.emit("delete", { message: data.message });
   });
   client.on("disconnect", function() {
     console.log("disconnect __________________");

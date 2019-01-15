@@ -1,11 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 // const uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 // const jwt = require('jsonwebtoken');
 // const secret = require('../config/secret').secret;
 
-
 const UserSchema = new Schema({
+  username: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -24,4 +27,4 @@ const UserSchema = new Schema({
   }
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model("user", UserSchema);

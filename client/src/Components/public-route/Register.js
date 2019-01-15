@@ -10,6 +10,7 @@ class Register extends Component {
     super();
     this.state = {
       name: "",
+      username: "",
       email: "",
       password: "",
       password2: "",
@@ -29,6 +30,7 @@ class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
     const newUser = {
+      username: this.state.username,
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
@@ -60,6 +62,7 @@ class Register extends Component {
                 <input
                   onChange={this.onChange}
                   value={this.state.name}
+                  placeholder="Name"
                   error={errors.name}
                   id="name"
                   type="text"
@@ -67,7 +70,7 @@ class Register extends Component {
                     invalid: errors.name
                   })}
                 />
-                <label htmlFor="name">Name</label>
+                {/* <label htmlFor="name">Name</label> */}
                 <span className="red-text">{errors.name}</span>
               </div>
               <div className="input-field col s12">
@@ -75,27 +78,63 @@ class Register extends Component {
                   onChange={this.onChange}
                   value={this.state.email}
                   error={errors.email}
+                  placeholder="Email"
                   id="email"
                   type="email"
                   className={classnames("", {
                     invalid: errors.email
                   })}
                 />
-                <label htmlFor="email">Email</label>
+                {/* <label htmlFor="email">Email</label> */}
                 <span className="red-text">{errors.email}</span>
+              </div>
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.username}
+                  error={errors.username}
+                  placeholder="Username"
+                  id="username"
+                  type="username"
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    borderBottom: "1px solid #9e9e9e",
+                    borderRadius: "0",
+                    outline: "none",
+                    height: "3rem",
+                    width: "100%",
+                    fontSize: "16px",
+                    margin: "0 0 8px 0",
+                    padding: "0",
+                    WebkitBoxShadow: "none",
+                    boxShadow: "none",
+                    WebkitBoxSizing: "content-box",
+                    boxSizing: "content-box",
+                    WebkitTransition: "border .3s, -webkit-box-shadow .3s",
+                    transition:
+                      "box-shadow .3s, border .3s, -webkit-box-shadow .3s"
+                  }}
+                  className={classnames("", {
+                    invalid: errors.username
+                  })}
+                />
+                {/* <label htmlFor="email">Email</label> */}
+                <span className="red-text">{errors.username}</span>
               </div>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
                   value={this.state.password}
                   error={errors.password}
+                  placeholder="Password"
                   id="password"
                   type="password"
                   className={classnames("", {
                     invalid: errors.password
                   })}
                 />
-                <label htmlFor="password">Password</label>
+                {/* <label htmlFor="password">Password</label> */}
                 <span className="red-text">{errors.password}</span>
               </div>
               <div className="input-field col s12">
@@ -103,13 +142,14 @@ class Register extends Component {
                   onChange={this.onChange}
                   value={this.state.password2}
                   error={errors.password2}
+                  placeholder="Confirm Password"
                   id="password2"
                   type="password"
                   className={classnames("", {
                     invalid: errors.password2
                   })}
                 />
-                <label htmlFor="password2">Confirm Password</label>
+                {/* <label htmlFor="password2">Confirm Password</label> */}
                 <span className="red-text">{errors.password2}</span>
               </div>
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>

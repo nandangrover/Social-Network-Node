@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Container
-} from "reactstrap";
-// import { Link } from "react-router-dom";
+import { Navbar, Nav, NavItem, NavLink, Container } from "reactstrap";
+import { Link } from "react-router-dom";
 // import { logoutUser } from "../../actions/authAction";
 // import { connect } from "react-redux";
 
@@ -28,7 +21,8 @@ class NavBar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href="/">Chat App</NavbarBrand>
+            <Link to="/App">Chat App</Link>
+            {/* <NavbarBrand href="/">Chat App</NavbarBrand> */}
             {/* <NavbarToggler onClick={this.toggle} /> */}
             {/* <Collapse isOpen={this.state.isOpen} navbar> */}
             <Nav className="ml-auto" navbar>

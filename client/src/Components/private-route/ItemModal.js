@@ -36,7 +36,7 @@ class ItemModal extends Component {
 
     const newItem = {
       name: this.state.name,
-      userName: this.props.auth.user.name,
+      userName: this.props.auth.user.username,
       userId: this.props.auth.user.id
     };
     this.props.addItem(newItem);
@@ -63,6 +63,8 @@ class ItemModal extends Component {
           onChange={this.onChange}
           onKeyPress={this.onEnter}
           name="name"
+          autoComplete="off"
+          spellCheck="false"
           value={this.state.name}
           style={{
             marginTop: "0px",
