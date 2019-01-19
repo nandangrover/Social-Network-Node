@@ -8,6 +8,7 @@ const server = require("http").createServer(app);
 const passport = require("passport");
 const io = require("socket.io")(server);
 const items = require("./routes/api/items");
+const chats = require("./routes/api/chats");
 // const socketItems = require("./routes/api/items")(io)
 
 app.use(bodyParser.json());
@@ -34,6 +35,8 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
+//Chats route
+app.use("/api/chats", chats)
 
 //Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
@@ -65,6 +68,9 @@ io.on("connection", client => {
   client.on("disconnect", function() {
     console.log("disconnect __________________");
   });
+  client.on("privateChat", data => {
+    io.in(`${data.room}`).emit(`${data.room}`, {message: data.message})
+  })
 });
 
 // io.listen(port);

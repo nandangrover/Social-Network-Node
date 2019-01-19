@@ -2,26 +2,37 @@ import React, { Component } from "react";
 import { Container, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
-import { getItems, deleteItem, onUpdate } from "../../actions/itemActions";
-import { socket } from "../../Root";
-// import ScrollArea from "react-scrollbar";
-// import moment from 'moment';
-import MessageTime from "./MessageTime";
+import { getTree, getItems, deleteItem, onUpdate } from "../../../actions/userAction";
+import { setNavUser } from "../../../actions/navBarAction";
+import ChatModal from "./ChatModal";
+import { socket } from "../../../Root";
+import MessageTime from "../MessageTime";
 import PropTypes from "prop-types";
 
-class ChatRoom extends Component {
+class PrivateChatRoom extends Component {
+  state ={
+   chatId:"",
+   user: "",
+   params: ""
+  }
   componentDidMount() {
-    this.props.getItems();
+    let params = (new URL(document.location)).searchParams;
+    this.setState({chatId: params.get('id'),user:this.props.auth.user.username,params: atob(params.get('u'))})
+    this.props.getItems(params.get('id'));
+    this.props.setNavUser(atob(params.get('u')))
+    
     socket.on("update", data => {
       this.props.onUpdate(data);
     });
+    
   }
   componentDidUpdate() {
     const scrollElem = document.getElementsByClassName("ContainerScrollBar");
     scrollElem[0].scrollTop = scrollElem[0].scrollHeight;
+    // console.log(this.props.users.tree[0].chatId);
   }
   onDeleteClick = id => {
-    // this.props.deleteItem(id);
+    this.props.deleteItem(id);
     socket.emit("delete", { message: id });
     socket.on("delete", id => {
       this.props.deleteItem(id.message);
@@ -29,26 +40,8 @@ class ChatRoom extends Component {
   };
   render() {
     const { items } = this.props.item;
-    // console.log(items);
-
-    // this.ScrollArea.refresh();
-    // console.log(items);
-
     return (
       <Container>
-        {/* <Button
-          color="dark"
-          style={{ marginBottom: '2rem' }}
-          onClick={() => {
-            const name = prompt('Enter Item');
-            if (name) {
-              this.setState(state => ({
-                items: [...state.items, { id: uuid(), name }]
-              }))
-            }
-          }}
-        >Add Item
-        </Button> */}
         {/* <ListGroup style={{ wordBreak: "break-all" }}> */}
         <TransitionGroup className="Shopping-list" />
         <div className="ContainerScrollBar">
@@ -58,7 +51,7 @@ class ChatRoom extends Component {
             contentClassName="content"
             horizontal={false}
           > */}
-          {items.map(({ _id, name, date, userName }) => (
+          {items.map(({ _id, text, date, from }) => (
             <CSSTransition key={_id} timeout={500} classNames="fade">
               {/* <ListGroupItem */}
               <div
@@ -81,7 +74,7 @@ class ChatRoom extends Component {
                       marginBottom: "0px"
                     }}
                   >
-                    {userName}
+                    {from}
                   </div>
                 </div>
                 <div
@@ -98,7 +91,7 @@ class ChatRoom extends Component {
                   className="chats"
                   id={_id}
                 >
-                  {name}
+                  {text}
                   <Button
                     close
                     color="danger"
@@ -109,36 +102,34 @@ class ChatRoom extends Component {
                     &times;
                   </Button>
                   <MessageTime date={date} />
-                  {/* <Badge pill
-                  title={moment(date).toString()}
-                  style={{ marginLeft: '10px', backgroundColor: 'white', color: 'gray', position: 'relative', top: '4px' }}>{moment(date).fromNow()}
-                </Badge> */}
-                  {/* <MessageTime date={date} /> */}
-                  {/* </ListGroupItem> */}
                 </div>
               </div>
             </CSSTransition>
           ))}
           {/* </ScrollArea> */}
         </div>
+  <ChatModal currentSession={{chatId: this.state.chatId,from:this.state.user,to:this.state.params}}/>
         {/* </ListGroup> */}
       </Container>
     );
   }
 }
 
-ChatRoom.propTypes = {
-  getItems: PropTypes.func.isRequired,
+PrivateChatRoom.propTypes = {
   item: PropTypes.object.isRequired
 };
-ChatRoom.contextTypes = {
+PrivateChatRoom.contextTypes = {
   scrollArea: PropTypes.object
 };
+
 const mapStateToProps = state => ({
+  auth: state.auth,
+  users: state.users,
   item: state.item,
-  auth: state.auth
+  nav: state.nav
+
 });
 export default connect(
   mapStateToProps,
-  { getItems, deleteItem, onUpdate }
-)(ChatRoom);
+  { getTree, getItems, deleteItem, setNavUser, onUpdate }
+)(PrivateChatRoom);

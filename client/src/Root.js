@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import store from "./store";
 // import openSocket from "socket.io-client";
 import App from "./Components/private-route/App";
+import PrivateRoom from "./Components/private-route/chat-room/PrivateRoom";
 import Landing from "./Components/public-route/Landing";
 import Register from "./Components/public-route/Register";
 import Login from "./Components/public-route/Login";
@@ -13,6 +14,11 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authAction";
 import PrivateRoute from "./Components/private-route/PrivateRoute";
+import openSocket from "socket.io-client";
+const socket =
+  window.location.hostname === "127.0.0.1"
+    ? openSocket("http://127.0.0.1:5000")
+    : openSocket(window.location.hostname);
 // import Dashboard from "./components/dashboard/Dashboard";
 
 // Check for token to keep user logged in
@@ -44,6 +50,7 @@ const Root = ({ store }) => (
         <Route exact path="/login" component={Login} />
         <Switch>
           <PrivateRoute exact path="/App" component={App} />
+          <PrivateRoute exact path="/PrivateRoom" component={PrivateRoom} />
         </Switch>
         {/* <Route exact path="/App" component={App} /> */}
       </div>
@@ -55,5 +62,5 @@ Root.propTypes = {
   store: PropTypes.object.isRequired
 };
 
-// export { socket };
+export { socket };
 export default Root;

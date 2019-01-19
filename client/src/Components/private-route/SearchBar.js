@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {
   Button,
   Modal,
@@ -10,14 +10,21 @@ import {
   ListGroup,
   ListGroupItem
 } from "reactstrap";
-import { getUsers } from "../../actions/userAction";
+import { getUsers, storeCurrentRoomUsers, getTree } from "../../actions/userAction";
+import { setNavUser } from "../../actions/navBarAction";
+
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      search: ""
+      search: "",
+      username:"",
+      store: {
+        from:"",
+        to:""
+      }
     };
 
     this.toggle = this.toggle.bind(this);
@@ -35,6 +42,18 @@ class SearchBar extends Component {
       this.props.users.users = [];
     }
     // console.log(e.target.value);
+  };
+  storeId = e => {
+    this.setState({store:{to: e.target.id, from: this.props.auth.user.id}, username: e.target.name}, () => {
+    this.props.storeCurrentRoomUsers(this.state.store);
+    const from =  this.state.store.from;
+    const to =  this.state.store.to;
+    this.props.getTree(from.substring(from.length - 5, from.length).concat(to.substring(to.length - 5, to.length)), this.props.history,this.state.username);
+    
+    this.props.setNavUser(this.state.username);
+    this.toggle();
+      
+    })
   };
   render() {
     const closeBtn = (
@@ -74,12 +93,21 @@ class SearchBar extends Component {
             <input
               placeholder="Search"
               onChange={this.onChange}
+              autoComplete="off"
+              spellCheck="false"
               name="search"
               value={this.state.search}
             />
             <ListGroup>
-              {users.map(({ username }) => (
-                <ListGroupItem key={username} tag="a" href="#">
+              {users.map(({ username, _id }) => (
+                <ListGroupItem
+                  key={username}
+                  tag="a"
+                  name={username}
+                  onClick={this.storeId}
+                  style={{"cursor":"pointer"}}
+                  id={_id}
+                >
                   {username}
                 </ListGroupItem>
               ))}
@@ -112,11 +140,13 @@ class SearchBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  users: state.users
+  users: state.users,
+  auth: state.auth,
+  nav: state.nav
 });
 
 export default connect(
   mapStateToProps,
-  { getUsers }
-)(SearchBar);
+  { getUsers, storeCurrentRoomUsers, getTree, setNavUser }
+)(withRouter(SearchBar));
 // export default SearchBar;
