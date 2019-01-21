@@ -69,9 +69,29 @@ io.on("connection", client => {
     console.log("disconnect __________________");
   });
   client.on("privateChat", data => {
-    io.in(`${data.room}`).emit(`${data.room}`, {message: data.message})
+    // console.log(client.id);
+    // client.join(data.room);
+    // console.log(io.nsps);
+    // console.log("heree", data.room);
+    
+    io.sockets.emit(`${data.room}`, { message: data.message });
+  //  privateConnection(data)
+    // const nsp = io.of(`/${data.room}`);
+    // nsp.emit('hi', 'Hello everyone!');
+    // io.in(`privateChat`).emit(`${data.room}`, {msg: 'hello'});
+    // io.in(`${data.room}`).emit(`${data.room}`, {message: data.message})
   })
 });
+
+function privateConnection(data){
+// console.log(data, "inside private");
+
+const nsp = io.of(`/${data.room}`);
+nsp.on('connection', function(socket) {
+  //  console.log('someone connected');
+   nsp.emit(`${data.room}`, {message: data.message});
+});
+}
 
 // io.listen(port);
 console.log("listening on port ", port);

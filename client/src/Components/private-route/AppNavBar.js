@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, NavbarBrand, Nav, NavItem, Container } from "reactstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authAction";
 import { setNavUser } from "../../actions/navBarAction";
 import { connect } from "react-redux";
@@ -32,7 +32,7 @@ class AppNavBar extends Component {
   };
 
   render() {
-    console.log(this.props.nav);
+    // console.log(this.props.nav);
     
     return (
       <div>

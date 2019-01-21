@@ -34,7 +34,7 @@ class ChatModal extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.props.currentSession);
+    // console.log(this.props.currentSession);
     
 
     const newItem = {

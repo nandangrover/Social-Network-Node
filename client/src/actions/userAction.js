@@ -1,6 +1,6 @@
 import axios from "axios";
 import uuid from "uuid";
-import { socket } from "../Root";
+import { socket } from "../Components/private-route/App";
 import { GET_USERS, ITEMS_LOADING, STORE_CURRENT_USER, GET_TREE, GET_ITEMS, ADD_ITEM, DELETE_ITEM, UPDATE_ITEMS } from "./types";
 
 export const getUsers = id => dispatch => {
@@ -97,15 +97,15 @@ export const deleteItem = id => dispatch => {
 };
 
 export const addItem = item => dispatch => {
-  console.log(item);
-  
+  let params = (new URL(document.location)).searchParams;
   dispatch(setItemsLoading());
   axios.post("/api/chats", item).then(res => {
     dispatch({
       type: ADD_ITEM,
       payload: res.data
     });
-    socket.emit("update", { message: res.data });
+    
+    socket.emit("privateChat", { room:params.get('id'), message: res.data });
   });
 };
 

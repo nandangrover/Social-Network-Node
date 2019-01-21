@@ -3,7 +3,7 @@ import { Container, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import { getItems, deleteItem, onUpdate } from "../../actions/itemActions";
-import { socket } from "../../Root";
+import { socket } from "./App";
 // import ScrollArea from "react-scrollbar";
 // import moment from 'moment';
 import MessageTime from "./MessageTime";

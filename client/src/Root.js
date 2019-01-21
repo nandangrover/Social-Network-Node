@@ -14,11 +14,17 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authAction";
 import PrivateRoute from "./Components/private-route/PrivateRoute";
-import openSocket from "socket.io-client";
-const socket =
-  window.location.hostname === "127.0.0.1"
-    ? openSocket("http://127.0.0.1:5000")
-    : openSocket(window.location.hostname);
+// import openSocket from "socket.io-client";
+// const socket =
+//   window.location.hostname === "127.0.0.1"
+//     ? openSocket("http://127.0.0.1:5000/App")
+//     : openSocket(window.location.hostname/App);
+
+// let params = (new URL(document.location)).searchParams;
+
+    // const socket = window.location.hostname === "127.0.0.1"
+    // ? openSocket(`http://127.0.0.1:5000/${params.get('id')}`)
+    // : openSocket(`${window.location.hostname}/${params.get('id')}`);
 // import Dashboard from "./components/dashboard/Dashboard";
 
 // Check for token to keep user logged in
@@ -62,5 +68,5 @@ Root.propTypes = {
   store: PropTypes.object.isRequired
 };
 
-export { socket };
+// export { openSocket };
 export default Root;

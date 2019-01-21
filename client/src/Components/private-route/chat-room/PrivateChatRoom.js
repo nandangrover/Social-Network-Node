@@ -5,9 +5,13 @@ import { connect } from "react-redux";
 import { getTree, getItems, deleteItem, onUpdate } from "../../../actions/userAction";
 import { setNavUser } from "../../../actions/navBarAction";
 import ChatModal from "./ChatModal";
-import { socket } from "../../../Root";
+import { socket } from "../App";
 import MessageTime from "../MessageTime";
 import PropTypes from "prop-types";
+// import openSocket from "socket.io-client";
+
+// let params = (new URL(document.location)).searchParams;
+
 
 class PrivateChatRoom extends Component {
   state ={
@@ -20,6 +24,19 @@ class PrivateChatRoom extends Component {
     this.setState({chatId: params.get('id'),user:this.props.auth.user.username,params: atob(params.get('u'))})
     this.props.getItems(params.get('id'));
     this.props.setNavUser(atob(params.get('u')))
+    // socket.emit("privateChat", { room:params.get('id'), message: "hello" })
+
+    //Private socket
+      socket.on('hi',function(data) {
+         document.body.innerHTML = '';
+         document.write(data);
+      });
+
+    socket.on(`${params.get('id')}`, data => {
+      this.props.onUpdate(data);
+      
+    })
+    // socket.emit("privateChat", { room:params.get('id'), message: "hello" });
 
     socket.on("update", data => {
       this.props.onUpdate(data);
@@ -39,7 +56,7 @@ class PrivateChatRoom extends Component {
   };
   render() {
     const { items } = this.props.item;
-    console.log(items);
+    // console.log(items);
     
     return (
       <Container>
@@ -121,7 +138,8 @@ class PrivateChatRoom extends Component {
 }
 
 PrivateChatRoom.propTypes = {
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  getItems: PropTypes.func.isRequired,
 };
 PrivateChatRoom.contextTypes = {
   scrollArea: PropTypes.object

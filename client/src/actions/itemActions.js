@@ -1,5 +1,5 @@
 import axios from "axios";
-import { socket } from "../Root";
+import { socket } from "../Components/private-route/App";
 import {
   GET_ITEMS,
   ADD_ITEM,
