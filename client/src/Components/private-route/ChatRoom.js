@@ -3,6 +3,7 @@ import { Container, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import { getItems, deleteItem, onUpdate } from "../../actions/itemActions";
+import { setNavUser } from "../../actions/navBarAction";
 import { socket } from "./App";
 // import ScrollArea from "react-scrollbar";
 // import moment from 'moment';
@@ -13,7 +14,8 @@ class ChatRoom extends Component {
   componentDidMount() {
     this.props.getItems();
     socket.on("update", data => {
-      console.log("counter|||||");
+      // console.log("counter|||||");
+      this.props.setNavUser('Group')
       
       this.props.onUpdate(data);
     });
@@ -147,5 +149,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getItems, deleteItem, onUpdate }
+  { getItems, deleteItem, onUpdate, setNavUser }
 )(ChatRoom);
