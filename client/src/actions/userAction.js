@@ -24,16 +24,26 @@ export const storeCurrentRoomUsers = users => dispatch => {
   })
 };
 
-export const getTree = (id,history,username) => dispatch => {
+export const getTree = (id,history,username,to) => dispatch => {
+  let chatIdExist = false, toggle = false;
   dispatch(setItemsLoading());
   axios.get(`/api/chats/tree/${id}`).then(res => {
     if(res.data[0] !== undefined){
       const base64 = btoa(username);
-      history.push(`/PrivateRoom?id=${res.data[0].chatId}&u=${base64}`)
+      res.data.forEach((elem, index) => {
+        chatIdExist = elem.user.includes(to);
+        if(chatIdExist){
+          history.push(`/PrivateRoom?id=${res.data[index].chatId}&u=${base64}`)
+          window.location.reload();
+          toggle = !toggle;
+        }
+      });
+      if(!chatIdExist && !toggle){
+        dispatch(setTree([id,to],history,username));
+      }
     }
-    else{
-      dispatch(setTree(id));
-      // localStorage.setItem('chatId',null)
+    else {
+      dispatch(setTree([id,to],history,username));
     }
     dispatch({
       type: GET_TREE,
@@ -42,15 +52,16 @@ export const getTree = (id,history,username) => dispatch => {
   });
 };
 
-export const setTree = id => dispatch => {
+export const setTree = (id, history, username) => dispatch => {
   const payload = { user: id, chatId: uuid()}
+  const base64 = btoa(username);
   axios.post("/api/chats/tree", payload).then(res => {
-    // console.log(res);
-    
     dispatch({
       type: GET_TREE,
       payload: res.data
     });
+    history.push(`/PrivateRoom?id=${res.data.chatId}&u=${base64}`);
+    window.location.reload();
   });
 }
 

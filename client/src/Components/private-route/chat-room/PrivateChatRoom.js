@@ -20,11 +20,10 @@ class PrivateChatRoom extends Component {
     this.setState({chatId: params.get('id'),user:this.props.auth.user.username,params: atob(params.get('u'))})
     this.props.getItems(params.get('id'));
     this.props.setNavUser(atob(params.get('u')))
-    
+
     socket.on("update", data => {
       this.props.onUpdate(data);
     });
-    
   }
   componentDidUpdate() {
     const scrollElem = document.getElementsByClassName("ContainerScrollBar");
@@ -40,6 +39,8 @@ class PrivateChatRoom extends Component {
   };
   render() {
     const { items } = this.props.item;
+    console.log(items);
+    
     return (
       <Container>
         {/* <ListGroup style={{ wordBreak: "break-all" }}> */}
@@ -112,6 +113,10 @@ class PrivateChatRoom extends Component {
         {/* </ListGroup> */}
       </Container>
     );
+  }
+
+  componentWillUnmount(){
+    socket.removeListener('update');
   }
 }
 

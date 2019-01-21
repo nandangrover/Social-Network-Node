@@ -3,7 +3,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  user: "",
+  user: "Group",
   loading: false
 };
 

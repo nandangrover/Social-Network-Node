@@ -48,7 +48,7 @@ class SearchBar extends Component {
     this.props.storeCurrentRoomUsers(this.state.store);
     const from =  this.state.store.from;
     const to =  this.state.store.to;
-    this.props.getTree(from.substring(from.length - 5, from.length).concat(to.substring(to.length - 5, to.length)), this.props.history,this.state.username);
+    this.props.getTree(from, this.props.history,this.state.username, to);
     
     this.props.setNavUser(this.state.username);
     this.toggle();

@@ -13,6 +13,8 @@ class ChatRoom extends Component {
   componentDidMount() {
     this.props.getItems();
     socket.on("update", data => {
+      console.log("counter|||||");
+      
       this.props.onUpdate(data);
     });
   }
@@ -28,6 +30,7 @@ class ChatRoom extends Component {
     });
   };
   render() {
+    
     const { items } = this.props.item;
     // console.log(items);
 
@@ -124,6 +127,10 @@ class ChatRoom extends Component {
         {/* </ListGroup> */}
       </Container>
     );
+  }
+
+  componentWillUnmount(){
+    socket.removeListener('update');
   }
 }
 
