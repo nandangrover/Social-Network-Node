@@ -14,33 +14,38 @@ import PropTypes from "prop-types";
 
 
 class PrivateChatRoom extends Component {
-  state ={
+  constructor(props){
+  super(props);
+  this.state = { 
    chatId:"",
    user: "",
-   params: ""
+   paramsUser: "",
+   paramsId: ""
   }
+}
   componentDidMount() {
     let params = (new URL(document.location)).searchParams;
-    this.setState({chatId: params.get('id'),user:this.props.auth.user.username,params: atob(params.get('u'))})
+    this.setState({chatId: params.get('id'),user:this.props.auth.user.username,paramsUser: params.get('u'),paramsId: params.get('id')})
     this.props.getItems(params.get('id'));
     this.props.setNavUser(atob(params.get('u')))
     // socket.emit("privateChat", { room:params.get('id'), message: "hello" })
 
     //Private socket
-      socket.on('hi',function(data) {
-         document.body.innerHTML = '';
-         document.write(data);
-      });
-
-    socket.on(`${params.get('id')}`, data => {
+    socket.on(`${params.get('id')}_update`, data => {
       this.props.onUpdate(data);
-      
     })
+
+    socket.on(`${params.get('id')}_delete`, id => {
+      // console.log("hereeeeee",id.message);
+      console.log(this.state.paramsId);
+      
+      this.props.deleteItem(id.message);
+    });
     // socket.emit("privateChat", { room:params.get('id'), message: "hello" });
 
-    socket.on("update", data => {
-      this.props.onUpdate(data);
-    });
+    // socket.on("update", data => {
+    //   this.props.onUpdate(data);
+    // });
   }
   componentDidUpdate() {
     const scrollElem = document.getElementsByClassName("ContainerScrollBar");
@@ -49,10 +54,7 @@ class PrivateChatRoom extends Component {
   }
   onDeleteClick = id => {
     this.props.deleteItem(id);
-    socket.emit("delete", { message: id });
-    socket.on("delete", id => {
-      this.props.deleteItem(id.message);
-    });
+    socket.emit("deletePrivate", { room: this.state.paramsId, message: id });
   };
   render() {
     const { items } = this.props.item;
@@ -126,7 +128,7 @@ class PrivateChatRoom extends Component {
           ))}
           {/* </ScrollArea> */}
         </div>
-  <ChatModal currentSession={{chatId: this.state.chatId,from:this.state.user,to:this.state.params}}/>
+  <ChatModal currentSession={{chatId: this.state.chatId,from:this.state.user,to: this.state.paramsUser}}/>
         {/* </ListGroup> */}
       </Container>
     );

@@ -19,7 +19,7 @@ export const getItems = () => dispatch => {
 };
 
 export const deleteItem = id => dispatch => {
-  console.log(id);
+  // console.log(id);
 
   dispatch(setItemsLoading());
   axios.delete(`/api/items/${id}`).then(res => {

@@ -74,13 +74,17 @@ io.on("connection", client => {
     // console.log(io.nsps);
     // console.log("heree", data.room);
     
-    io.sockets.emit(`${data.room}`, { message: data.message });
+    io.sockets.emit(`${data.room}_update`, { message: data.message });
   //  privateConnection(data)
     // const nsp = io.of(`/${data.room}`);
     // nsp.emit('hi', 'Hello everyone!');
     // io.in(`privateChat`).emit(`${data.room}`, {msg: 'hello'});
     // io.in(`${data.room}`).emit(`${data.room}`, {message: data.message})
-  })
+  });
+  client.on("deletePrivate", data => {
+    // console.log(data.room);
+    io.sockets.emit(`${data.room}_delete`, { message: data.message });
+  });
 });
 
 function privateConnection(data){
