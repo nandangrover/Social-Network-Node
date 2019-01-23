@@ -13,8 +13,15 @@ class Login extends Component {
       errors: {}
     };
   }
+  componentWillMount(){
+    if (this.props.auth.isAuthenticated) { 
+      this.props.history.push("/App"); // push user to dashboard when they login
+    }
+ 
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
+    if (nextProps.auth.isAuthenticated) { 
       this.props.history.push("/App"); // push user to dashboard when they login
     }
     if (nextProps.errors) {

@@ -106,7 +106,8 @@ class PrivateChatRoom extends Component {
                     padding: "12px",
                     height: "auto",
                     wordBreak: "break-word",
-                    position: "relative"
+                    position: "relative",
+                    whiteSpace: "pre-wrap"
                   }}
                   className="chats"
                   id={_id}

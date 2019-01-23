@@ -12,30 +12,6 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <script type="text/javascript" src="%PUBLIC_URL%/js/library/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="%PUBLIC_URL%/js/resize/Resize.js"></script>
-    <script>
-      window.onload = function() {
-          onResizeFn();
-          $(window).resize(onResizeFn);
-      };
-      window.onbeforeunload = function() {
-          document.getElementById("shellFrame").contentWindow.playerObj.unloadCourse();
-      };
-  </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -50,7 +26,6 @@
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <iframe id="shellFrame" style="position:absolute; left:0px; top:0px; border: none; overflow: hidden; width:1000px; height:750px;" src="inner.html" frameborder="0" scrolling="no"></iframe>
     <div id="root"></div>
     <!--
       This HTML file is a template.

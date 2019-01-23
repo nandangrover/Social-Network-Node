@@ -13,10 +13,9 @@ import PropTypes from "prop-types";
 class ChatRoom extends Component {
   componentDidMount() {
     this.props.getItems();
+    this.props.setNavUser('Group')
     socket.on("update", data => {
       // console.log("counter|||||");
-      this.props.setNavUser('Group')
-      
       this.props.onUpdate(data);
     });
   }
@@ -98,7 +97,8 @@ class ChatRoom extends Component {
                     padding: "12px",
                     height: "auto",
                     wordBreak: "break-word",
-                    position: "relative"
+                    position: "relative",
+                    whiteSpace: "pre-wrap"
                   }}
                   className="chats"
                   id={_id}

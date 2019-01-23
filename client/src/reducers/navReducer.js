@@ -1,9 +1,10 @@
 import {
-  GET_NAV_USER,
+  GET_NAV_USER, GET_CHAT_HISTORY
 } from "../actions/types";
 
 const initialState = {
   user: "Group",
+  chatHistory: [],
   loading: false
 };
 
@@ -15,7 +16,12 @@ export default function(state = initialState, action) {
         user: action.payload,
         loading: false
       };
-
+      case GET_CHAT_HISTORY:
+      return {
+        ...state,
+        chatHistory: action.payload,
+        loading: false
+      }
     default:
       return state;
   }

@@ -14,3 +14,4 @@ export const STORE_CURRENT_USER = "STORE_CURRENT_USER";
 export const GET_TREE = "GET_TREE";
 //NavBar
 export const GET_NAV_USER = "GET_NAV_USER";
+export const GET_CHAT_HISTORY = "GET_CHAT_HISTORY";

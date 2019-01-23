@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Chats = require("../../models/Chats");
 const Tree = require("../../models/Tree");
+const User = require("../../models/User");
 // const io = require("../../server");
 
 // const app = express();
@@ -17,6 +18,39 @@ router.get("/tree/:id", (req, res) => {
     // })
     .then(users => res.json(users));
 });
+
+router.get("/chatHistory/:id", (req, res) => {
+  const userArr = [];
+  Tree.find({ user: req.params.id })
+    .sort({
+      date: -1
+    })
+    .then(users => {
+    //   users.forEach((item) => {
+      // item.user.filter((userElem) => {
+      //   if(userElem !== req.params.id){
+    //       // userArr.push({userTree: item, username: "username.username"});
+    //       User.findById(userElem)
+    //       .then((username) => {
+    //         userArr.push({userTree: item, username: username.username});
+    //         res.json(userArr);
+    //         // return userElem;
+    //       })  
+    //     }
+    //   })    
+    // })
+    res.json(users);
+  }
+  )
+})
+
+router.get("/chatHistory/user/:id", (req, res) => {
+    User.findById(req.params.id)
+    .then((username) => {
+      res.json(username.username)
+    })
+})
+
 
 router.get("/:id", (req, res) => {
   // const v = req.params;
@@ -38,18 +72,7 @@ router.post("/", (req, res) => {
   });
   newChat.save().then(chat => {
     res.json(chat);
-    // });
   });
-  // .then(() => {
-  // global.io.sockets.on("connection", client => {
-  // });
-  // newItem.save().then(item => {
-  //   exports = module.exports = io => {
-  //     io.sockets.on("connection", client => {
-  //       io.sockets.emit("update", { message: res.json(item) });
-  //     });
-  //   };
-  // })
 });
 
 router.post("/tree", (req, res) => {
@@ -76,5 +99,14 @@ router.delete("/:id", (req, res) => {
       })
     );
 });
+
+function getUsers() {
+   let promise = new promise((res, rej) => {
+    setTimeout(() => {
+      resolve("completed")
+    }, 100);
+   })
+   return promise;
+}
 
 module.exports = router;

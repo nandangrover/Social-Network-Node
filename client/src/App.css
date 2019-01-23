@@ -41,3 +41,6 @@ body::-webkit-scrollbar-thumb {
 .navbar-brand {
   margin: auto;
 }
+span.badge {
+  color: #ffffff;
+}

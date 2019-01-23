@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Navbar, NavbarBrand, Nav, NavItem, Container } from "reactstrap";
 // import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authAction";
-import { setNavUser } from "../../actions/navBarAction";
+import { setNavUser, getChatHistory } from "../../actions/navBarAction";
+// import { getChatHistory } from "../../actions/navBarAction";
 import { connect } from "react-redux";
 import SearchBar from "./SearchBar";
 import SideMenu from "./SideMenu";
@@ -29,6 +30,7 @@ class AppNavBar extends Component {
   }
   makeMenu = e => {
     this.setState({ showMenu: !this.state.showMenu });
+    this.props.getChatHistory(this.props.auth.user.id);
   };
 
   render() {
@@ -73,6 +75,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, setNavUser }
+  { logoutUser, setNavUser, getChatHistory }
 )(AppNavBar);
 // export default AppNavBar;

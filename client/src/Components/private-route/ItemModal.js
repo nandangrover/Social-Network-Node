@@ -24,6 +24,12 @@ class ItemModal extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+    if(e.target.value !== ""){
+      e.target.style.borderBottom = "2px solid #63de68";
+    } 
+    else{
+      e.target.style.borderBottom = "2px solid rgb(197, 208, 197)";
+    }
   };
   onEnter = e => {
     if (e.key === "Enter") {
@@ -57,27 +63,24 @@ class ItemModal extends Component {
           position: "relative"
         }}
       >
-        <input
+        <textarea
           className="inputArea"
           placeholder={this.state.placeholder}
           onChange={this.onChange}
-          onKeyPress={this.onEnter}
           name="name"
           autoComplete="off"
           spellCheck="false"
           value={this.state.name}
           style={{
-            marginTop: "0px",
-            marginBottom: "0px",
-            // width: "797px",
-            marginLeft: "18px",
-            left: "10px",
-            resize: "none",
-            backgroundColor: "#fffdfd",
-            height: "34px",
-            outline: "none",
-            borderRadius: "5px",
-            marginRight: "11px"
+            "margin": "0px 11px 0px 18px",
+            "left": "10px",
+            "resize": "none",
+            "backgroundColor": "rgb(255, 253, 253)",
+            "height": "34px",
+            "outline": "none",
+            "border": "navajowhite",
+            "borderBottom": "2px solid rgb(197, 208, 197)",
+            "borderRadius": "5px"
           }}
         />
         <button
