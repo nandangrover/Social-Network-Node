@@ -7,3 +7,5 @@ Menu bar shows chat history.
 Search feature to search for registered users.
 
 User authentication with use of jwt tokens.
+
+[Hosted In Heroku](https://social-network-node.herokuapp.com/)
